@@ -16,7 +16,7 @@ class AuthDataSourceImpl extends AuthDataSource {
   Future<User> login(String email, String password) async {
     try {
       final response = await dio
-          .post('auth/login', data: {'email': email, 'password': password});
+          .post('/auth/login', data: {'email': email, 'password': password});
 
       final user = UserMapper.userJsonEntity(response.data);
 
