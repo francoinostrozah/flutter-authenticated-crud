@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:teslo_shop/features/shared/infrastructure/inputs/inputs.dart';
+
+final loginFormProvider =
+    StateNotifierProvider.autoDispose<LoginFormNotifier, LoginFormState>((ref) {
+  return LoginFormNotifier();
+});
 
 class LoginFormState {
   final bool isPosting;
@@ -64,7 +68,10 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
   }
 
   onFormSubmit() {
-    if (!state.isValid) return;
+    if (!state.isValid) {
+      _touchEveryField();
+      return;
+    }
 
     print(state);
   }
@@ -80,8 +87,3 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
         isValid: Formz.validate([email, password]));
   }
 }
-
-final loginFormProvider =
-    StateNotifierProvider.autoDispose<LoginFormNotifier, FormState>((ref) {
-  return LoginFormNotifier();
-});
